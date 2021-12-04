@@ -92,14 +92,15 @@ local Chunk = {
         
         -- Instructions
         c = c .. DumpInt(self.Instructions.Count)
-		print("Instrs",self.Instructions.Count)
+		--print("Instrs",self.Instructions.Count)
         for i = 1, self.Instructions.Count do
+            --print(self.Instructions[i - 1])
             c = c .. LAT.Lua51.DumpBinary.Opcode(self.Instructions[i - 1])
         end
         
         -- Constants
         c = c .. DumpInt(self.Constants.Count)
-		print("Constants", self.Constants.Count)
+		--print("Constants", self.Constants.Count)
         for i = 1, self.Constants.Count do
             local cnst = self.Constants[i - 1]
             if cnst.Type == "Nil" then
@@ -120,7 +121,7 @@ local Chunk = {
         
         -- Protos
         c = c .. DumpInt(self.Protos.Count)
-		print(self.Protos.Count)
+		--print(self.Protos.Count)
         for i = 1, self.Protos.Count do
             c = c .. self.Protos[i - 1]:Compile(file, verify)
         end
@@ -148,7 +149,7 @@ print(i, i-1, self.Instructions[i-1].LineNumber)
         
         --[ [
         c = c .. DumpInt(self.Instructions.Count)
-		print(self.Instructions.Count)
+		--print(self.Instructions.Count)
         for i = 1, self.Instructions.Count do
             c = c .. DumpInt(self.Instructions[i - 1].LineNumber)
         end
@@ -156,7 +157,7 @@ print(i, i-1, self.Instructions[i-1].LineNumber)
         
         -- Locals 
         c = c .. DumpInt(self.Locals.Count)
-		print(self.Locals.Count)
+		--print(self.Locals.Count)
         for i = 1, self.Locals.Count do
             local l = self.Locals[i - 1]
             c = c .. DumpString(l.Name)
@@ -166,7 +167,7 @@ print(i, i-1, self.Instructions[i-1].LineNumber)
         
         -- Upvalues
         c = c .. DumpInt(self.Upvalues.Count)
-		print(self.Upvalues.Count)
+		--print(self.Upvalues.Count)
         for i = 1, self.Upvalues.Count do
             c = c .. DumpString(self.Upvalues[i - 1].Name)
         end

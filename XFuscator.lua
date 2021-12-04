@@ -100,8 +100,8 @@ if arg and arg[1] then
         i = i + 1
     end
 else
-    --print("Code to obfuscate: ")
-    --code = io.read'*l'
+    print("Code to obfuscate: ")
+    code = io.read'*l'
 end
 
 local t1 = os and os.time() or tick()

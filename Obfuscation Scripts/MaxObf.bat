@@ -1,1 +1,1 @@
-XFuscator.lua "%1" -uglify -level 1 -max "%2"
+XFuscator.lua "input.lua" -uglify -level 1 -max "%2"

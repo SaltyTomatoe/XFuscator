@@ -1,5 +1,5 @@
 return function(a)
-    a:gsub("[%s]+", function() 
+    return a:gsub("[%s]+", function() 
         local r = "" 
         for i = 1, math.random(0, 20) do 
             local x = math.random(1, 100)

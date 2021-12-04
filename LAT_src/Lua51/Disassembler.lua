@@ -70,7 +70,8 @@ local function Disassemble(chunk)
         -- Instructions
 		--c.Instructions.Count = ReadInt32()
         local count = ReadInt32()
-		c.Instructions.Count = count
+		--c.Instructions.Count = count
+        print("Instruction Count: ", count)
         for i = 1, count do
             local op = ReadInt32();
             local opcode = bit.get(op, 1, 6)
@@ -93,7 +94,7 @@ local function Disassemble(chunk)
 		-- Constants
         --c.Constants.Count = ReadInt32()
         count = ReadInt32()
-		c.Constants.Count = count
+		--c.Constants.Count = count
         for i = 1, count do
             local cnst = Constant:new()
             local t = ReadInt8()
@@ -118,7 +119,7 @@ local function Disassemble(chunk)
         -- Protos
         --c.Protos.Count = ReadInt32()
         count = ReadInt32()
-		c.Protos.Count = count
+		--c.Protos.Count = count
         for i = 1, count do
             c.Protos[i - 1] = ReadFunction()
         end
@@ -132,14 +133,14 @@ local function Disassemble(chunk)
         -- Locals
         --c.Locals.Count = ReadInt32()
         count = ReadInt32()
-		c.Locals.Count = count
+		--c.Locals.Count = count
         for i = 1, count do
             c.Locals[i - 1] = Local:new(ReadString(), ReadInt32(), ReadInt32())
         end
         -- Upvalues
         --c.Upvalues.Count = ReadInt32()
         count = ReadInt32()
-		c.Upvalues.Count = count
+		--c.Upvalues.Count = count
         for i = 1, count do 
             c.Upvalues[i - 1] = Upvalue:new(ReadString())
         end
