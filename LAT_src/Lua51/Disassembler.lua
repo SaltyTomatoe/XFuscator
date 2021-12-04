@@ -3,7 +3,7 @@ local function Disassemble(chunk)
     local Chunk, Local, Constant, Upvalue, Instruction = LAT.Lua51.Chunk, LAT.Lua51.Local, LAT.Lua51.Constant, LAT.Lua51.Upvalue, LAT.Lua51.Instruction
     local Luafile = LAT.Lua51.LuaFile
     local GetNumberType = LAT.Lua51.GetNumberType
-
+	print("#",#chunk)
     if chunk == nil then
         error("File is nil!")
     end
@@ -11,7 +11,6 @@ local function Disassemble(chunk)
 	local big = false;
     local file = LAT.Lua51.LuaFile:new()
     local loadNumber = nil
-    
     local function Read(len)
         len = len or 1
         local c = chunk:sub(index, index + len - 1)
@@ -38,34 +37,25 @@ local function Disassemble(chunk)
 		index = index + len
 		return str
 	end
-	
-	local function ReadInt32()
-        if file.IntegerSize > file.SizeT then
-            error("IntegerSize cannot be greater than SizeT")
-        end
-        local x = Read(file.SizeT)
-        if not x or x:len() == 0 then
-            error("Could not load integer")
-        else
-            local sum = 0
-            for i = file.IntegerSize, 1, -1 do
-                sum = sum * 256 + string.byte(x, i)
-            end
-            -- test for negative number
-            if string.byte(x, file.IntegerSize) > 127 then
-                sum = sum - math.ldexp(1, 8 * file.IntegerSize)
-            end
-            return sum
-        end
-	end
-    
+
+    local function ReadInt32()
+        local a, b, c, d = chunk:byte(index, index + 3);
+        index = index + 4;
+        return d*16777216 + c*65536 + b*256 + a
+    end
+
+	local function ReadInt64()
+        local a = ReadInt32();
+        local b = ReadInt32();
+        return b*4294967296 + a;
+    end
+
 	local function ReadString()
-		local tmp = Read(file.SizeT)
-        local sum = 0
-        for i = file.SizeT, 1, -1 do
-          sum = sum * 256 + string.byte(tmp, i)
-        end
-		return GetString(sum):sub(1, -2) -- Strip last '\0'
+		if(file.SizeT == 8)then
+			local size = ReadInt64()
+			return GetString(size):sub(1, -2) -- Strip last '\0'
+		end
+		return GetString(ReadInt32()):sub(1, -2) -- Strip last '\0'
 	end
     
 	local function ReadFunction()
@@ -138,11 +128,14 @@ local function Disassemble(chunk)
         
         -- Locals
         --c.Locals.Count = ReadInt32()
+		print(index)
         count = ReadInt32()
+		print(index)
         for i = 1, count do
+			print(index)
             c.Locals[i - 1] = Local:new(ReadString(), ReadInt32(), ReadInt32())
+			print("Continue")
         end
-        
         -- Upvalues
         --c.Upvalues.Count = ReadInt32()
         count = ReadInt32()

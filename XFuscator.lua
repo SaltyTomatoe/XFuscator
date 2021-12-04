@@ -22,7 +22,7 @@ printhi()
 
 local options = { 
     fluff = true,
-    useLoadstring = true,
+    loadstring = false,
     level = 1,
     mxLevel = 1,
     comments = false,
@@ -32,7 +32,7 @@ local options = {
     tamperDetection = true,
 }
 
-local outfn
+local outfn = "Output.lua"
 
 if arg and arg[1] then
     if arg[1] == '-h' or arg[1] == '-help' then
@@ -100,8 +100,8 @@ if arg and arg[1] then
         i = i + 1
     end
 else
-    print("Code to obfuscate: ")
-    code = io.read'*l'
+    --print("Code to obfuscate: ")
+    --code = io.read'*l'
 end
 
 local t1 = os and os.time() or tick()
@@ -117,7 +117,7 @@ else
     if a then
         print"-- Successful!"
         if not outfn then
-            print("Output: ", a())
+            --print("Output: ", a())
         end
     else
         print("-- Failed: " .. b)
