@@ -22,7 +22,7 @@ printhi()
 
 local options = { 
     fluff = true,
-    loadstring = false,
+    loadstring = true,
     level = 1,
     mxLevel = 1,
     comments = false,

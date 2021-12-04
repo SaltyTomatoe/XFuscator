@@ -31,6 +31,7 @@ local LuaFile = {
         c = c .. DumpBinary.Int8(self.IsFloatingPoint and 0 or 1)
         -- Main function
         c = c .. self.Main:Compile(self, verify)
+		--print(c)
         return c
     end,
     

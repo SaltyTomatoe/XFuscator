@@ -3,7 +3,6 @@ local function Disassemble(chunk)
     local Chunk, Local, Constant, Upvalue, Instruction = LAT.Lua51.Chunk, LAT.Lua51.Local, LAT.Lua51.Constant, LAT.Lua51.Upvalue, LAT.Lua51.Instruction
     local Luafile = LAT.Lua51.LuaFile
     local GetNumberType = LAT.Lua51.GetNumberType
-	print("#",#chunk)
     if chunk == nil then
         error("File is nil!")
     end
@@ -71,6 +70,7 @@ local function Disassemble(chunk)
         -- Instructions
 		--c.Instructions.Count = ReadInt32()
         local count = ReadInt32()
+		c.Instructions.Count = count
         for i = 1, count do
             local op = ReadInt32();
             local opcode = bit.get(op, 1, 6)
@@ -93,6 +93,7 @@ local function Disassemble(chunk)
 		-- Constants
         --c.Constants.Count = ReadInt32()
         count = ReadInt32()
+		c.Constants.Count = count
         for i = 1, count do
             local cnst = Constant:new()
             local t = ReadInt8()
@@ -117,28 +118,28 @@ local function Disassemble(chunk)
         -- Protos
         --c.Protos.Count = ReadInt32()
         count = ReadInt32()
+		c.Protos.Count = count
         for i = 1, count do
             c.Protos[i - 1] = ReadFunction()
         end
         
         -- Line numbers
-        for i = 1, ReadInt32() do 
+		count = ReadInt32()
+        for i = 1, count do 
             c.Instructions[i - 1].LineNumber = ReadInt32()
 		end
         
         -- Locals
         --c.Locals.Count = ReadInt32()
-		print(index)
         count = ReadInt32()
-		print(index)
+		c.Locals.Count = count
         for i = 1, count do
-			print(index)
             c.Locals[i - 1] = Local:new(ReadString(), ReadInt32(), ReadInt32())
-			print("Continue")
         end
         -- Upvalues
         --c.Upvalues.Count = ReadInt32()
         count = ReadInt32()
+		c.Upvalues.Count = count
         for i = 1, count do 
             c.Upvalues[i - 1] = Upvalue:new(ReadString())
         end

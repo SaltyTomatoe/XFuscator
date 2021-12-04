@@ -25,13 +25,14 @@ return function(a)
             local lcl = f.Locals[i]
             -- gives it away ;)
             --lcl.Name = "<local$" .. tostring(i) .. ">_" .. makeRandomName()
-            lcl.Name = tostring(i) .. makeRandomName()
+			print(lcl.Name)
+            lcl.Name = makeRandomName()
         end
     end
     
     if file then
         print("  - Renaming locals in precompiled chunk to utter nonsense ...")
-        doFunc(file.Main)
+        --doFunc(file.Main)
         
         a = file:Compile(false) -- Don't verify chunk
     end
