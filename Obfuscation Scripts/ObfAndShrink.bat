@@ -1,1 +1,1 @@
-XFuscator.lua "%1" -nocomments -nofluff -nostep2 -uglify -noencrypt -
+XFuscator.lua "input.lua" -nocomments -nofluff -nostep2 -uglify -noencrypt -
